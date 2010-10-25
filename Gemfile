@@ -6,6 +6,7 @@ gem 'rails', '3.0.1'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 gem 'sqlite3-ruby', :require => 'sqlite3'
+#gem 'mysql', :require => 'mysql'
 
 # Use unicorn as the web server
 # gem 'unicorn'
@@ -21,6 +22,7 @@ gem 'sqlite3-ruby', :require => 'sqlite3'
 # gem 'nokogiri'
 # gem 'sqlite3-ruby', :require => 'sqlite3'
 # gem 'aws-s3', :require => 'aws/s3'
+  gem 'mechanize'
 
 # Bundle gems for the local environment. Make sure to
 # put test-only gems in this group so their generators
@@ -28,3 +30,4 @@ gem 'sqlite3-ruby', :require => 'sqlite3'
 # group :development, :test do
 #   gem 'webrat'
 # end
+

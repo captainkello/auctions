@@ -1,4 +1,10 @@
 Auctions::Application.routes.draw do
+  resources :auctions do
+    collection do
+      get 'parse_ads'
+    end
+  end
+  
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
@@ -56,3 +62,4 @@ Auctions::Application.routes.draw do
   # Note: This route will make all actions in every controller accessible via GET requests.
   # match ':controller(/:action(/:id(.:format)))'
 end
+
