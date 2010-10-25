@@ -18,7 +18,7 @@ gem 'rails', '3.0.1'
 # Bundle the extra gems:
 # gem 'bj'
  gem 'nokogiri'
- gem 'sqlite3-ruby', :require => 'sqlite3'
+ gem 'sqlite3-ruby, :group => :development
 # gem 'aws-s3', :require => 'aws/s3'
   gem 'mechanize'
 
