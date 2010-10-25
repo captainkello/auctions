@@ -18,9 +18,9 @@ gem 'rails', '3.0.1'
 # Bundle the extra gems:
 # gem 'bj'
  gem 'nokogiri'
-gem 'mechanize'
- gem 'sqlite3-ruby, :group => :development
-  
+ gem 'sqlite3-ruby', :group => :development
+# gem 'aws-s3', :require => 'aws/s3'
+  gem 'mechanize'
 
 # Bundle gems for the local environment. Make sure to
 # put test-only gems in this group so their generators
