@@ -69,4 +69,6 @@ PLATFORMS
   x86-mingw32
 
 DEPENDENCIES
+  mechanize
   rails (= 3.0.1)
+  sqlite3-ruby
