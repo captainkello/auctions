@@ -71,5 +71,6 @@ PLATFORMS
 
 DEPENDENCIES
   mechanize
+  nokogiri
   rails (= 3.0.1)
   sqlite3-ruby
