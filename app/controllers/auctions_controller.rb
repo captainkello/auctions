@@ -1,6 +1,6 @@
 class AuctionsController < ApplicationController
- # require 'mechanize'
- # require 'parser'
+  require 'mechanize'
+  require 'parser'
   # GET /auctions
   # GET /auctions.xml
   def index
