@@ -1,4 +1,3 @@
 
 mechanize (>= 1.0.0)
 hpricot
-nokogiri (>= 1.3.3)
