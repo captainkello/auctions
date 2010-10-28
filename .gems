@@ -1,3 +1,3 @@
-mechanize
+mechanize (>= 1.0.0)
 hpricot
-nokogiri
+nokogiri (>= 1.3.3)
