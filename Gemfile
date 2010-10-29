@@ -17,6 +17,7 @@ gem 'rails', '3.0.1'
 
 # Bundle the extra gems:
 # gem 'bj'
+gem 'bundler'
 gem 'nokogiri'
 gem 'mechanize'
 

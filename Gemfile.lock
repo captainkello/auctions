@@ -70,6 +70,7 @@ PLATFORMS
   x86-mingw32
 
 DEPENDENCIES
+  bundler
   mechanize
   nokogiri
   rails (= 3.0.1)
