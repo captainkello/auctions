@@ -1,4 +1,5 @@
 class AuctionsController < ApplicationController
+	require 'nokogiri'
   require 'mechanize'
   require 'parser'
   # GET /auctions
