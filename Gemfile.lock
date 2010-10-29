@@ -67,7 +67,7 @@ GEM
     tzinfo (0.3.23)
 
 PLATFORMS
-  x86-mingw32
+  
 
 DEPENDENCIES
   bundler
