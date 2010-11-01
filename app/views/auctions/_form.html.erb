@@ -10,6 +10,49 @@
       </ul>
     </div>
   <% end %>
+<table>
+  <tr>
+	<td><%= f.label :tmk %></td>
+	<td><%= f.text_field :tmk %></td>
+  </tr>
+  <tr>
+	<td><%= f.label 'Auction Date' %></td>
+	<td><%= f.text_field :adate %></td>
+  </tr>
+  <tr>
+	<td><%= f.label 'Property Address 1' %></td>
+	<td><%= f.text_field :paddress1 %></td>
+  </tr>
+  <tr>
+	<td><%= f.label 'Property Address 2' %></td>
+	<td><%= f.text_field :paddress2 %></td>
+  </tr>
+  <tr>
+	<td><%= f.label 'Property Address 3' %></td>
+	<td><%= f.text_field :paddress3 %></td>
+  </tr>
+  <tr>
+	<td><%= f.label 'City' %></td>
+	<td><%= f.text_field :pcity %></td>
+  </tr>
+<tr>
+	<td><%= f.label 'State' %></td>
+	<td><%= f.text_field :pstate %></td>
+  </tr>	
+<tr>
+	<td><%= f.label 'Zip' %></td>
+	<td><%= f.text_field :pzip %></td>
+  </tr>
+<tr>
+	<td><%= f.label 'TS' %></td>
+	<td><%= f.text_field :ts %></td>
+  </tr>	
+<tr>
+	<td><%= f.label 'Legal Firm' %></td>
+	<td><%= f.label @auction.lfname %></td>
+  </tr>	
+</table>  
+
 
   <div class="actions">
     <%= f.submit %>

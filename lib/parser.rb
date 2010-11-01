@@ -357,7 +357,14 @@ class ReweItem
     def self.add_reject_data(link_data,doc_no)
         insert_hash = {:adtext => link_data, :doc_number => doc_no}
         Reject.create(insert_hash)
-    end
+      end
+      
+      def self.truncate_tables(table_names)
+          table_names.each do |name|
+            ActiveRecord::Base.connection.execute("Truncate #{name}")
+          end
+          
+      end
       
 end
 

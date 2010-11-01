@@ -3,3 +3,10 @@
 <br />
 
 <%= button_to 'Parse Ads', {:action => 'parse_ads'}, {:method => :get} %>
+
+<% @auctions.each do |auction| %>
+<p>
+ <%= auction.tmk.to_s+", "+auction.lfname.to_s %>	
+ <%= link_to 'Edit', edit_auction_path(auction.id) %>
+</p>
+<% end %>
