@@ -1,12 +1,64 @@
+<style>
+   .ads_table,.ads_table tr,.ads_table td,.ads_table th{
+  border: 1px solid gray;
+}	
+
+
+</style>
 <h1>Parsing ads page</h1>
 
 <br />
 
 <%= button_to 'Parse Ads', {:action => 'parse_ads'}, {:method => :get} %>
-
+<h2>Added Ads</h2>
+<table class="ads_table">
+<tr>
+  <th>Date</th>
+  <th>TMK</th>
+  <th>FS</th>
+  <th>TS</th>
+  <th>Legal Firm</th>	
+  <th>Property Address1</th>
+<th>Property Address2</th>
+<th>Property Address3</th>
+<th>Property State</th>
+<th>Property City</th>
+<th>Property Zip</th>
+  <th>...</th>
+  <th>...</th>		
+</tr>
 <% @auctions.each do |auction| %>
-<p>
- <%= auction.tmk.to_s+", "+auction.lfname.to_s %>	
- <%= link_to 'Edit', edit_auction_path(auction.id) %>
-</p>
+<tr>
+<td><%= auction.adate %></td>
+<td><%= auction.tmk %></td>
+<td><%= auction.fs %></td>
+<td><%= auction.ts %></td>
+<td><%= auction.lfname  %></td>
+<td><%= auction.paddress1 %></td>
+<td><%= auction.paddress2 %></td>
+<td><%= auction.paddress3 %></td>
+<td><%= auction.pstate %></td>
+<td><%= auction.pcity %></td>
+<td><%= auction.pzip %></td>
+<td><%= link_to 'Edit', edit_auction_path(auction.id) %></td>
+<td><%= link_to 'Delete', auction_path(auction.id), :confirm => 'Are you sure?',:method => "delete"%></td>
+</tr>
 <% end %>
+</table>
+
+<p><h2>Rejected Ads</h2>
+<table class="ads_table">
+<tr>
+  <th>Ad Text</th>
+  
+  <th>...</th>
+  <th>...</th>		
+</tr>
+<% @rejects.each do |reject| %>
+<tr>
+<td><%= reject.adtext.length > 255 ? reject.adtext.slice(0,255)+"..." : reject.adtext %></td>
+<td><%= link_to 'Edit', edit_reject_path(reject.id) %></td>
+<td><%= link_to 'Delete', reject_path(reject.id), :confirm => 'Are you sure?',:method => "delete"%></td>
+</tr>
+<% end %>
+</table>

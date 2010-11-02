@@ -6,7 +6,7 @@ class AuctionsController < ApplicationController
   # GET /auctions.xml
   def index
     @auctions = Auction.all
-
+    @rejects = Reject.all
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @auctions }

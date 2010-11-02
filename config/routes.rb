@@ -1,4 +1,6 @@
 Auctions::Application.routes.draw do
+ resources :rejects
+
   resources :auctions do
     collection do
       get 'parse_ads'
