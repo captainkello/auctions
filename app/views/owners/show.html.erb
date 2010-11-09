@@ -1,0 +1,40 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Tmk:</b>
+  <%= @owner.tmk %>
+</p>
+
+<p>
+  <b>Owner name:</b>
+  <%= @owner.owner_name %>
+</p>
+
+<p>
+  <b>Site address:</b>
+  <%= @owner.site_address %>
+</p>
+
+<p>
+  <b>Apartment no:</b>
+  <%= @owner.apartment_no %>
+</p>
+
+<p>
+  <b>Property class:</b>
+  <%= @owner.property_class %>
+</p>
+
+<p>
+  <b>Total parcel area:</b>
+  <%= @owner.total_parcel_area %>
+</p>
+
+<p>
+  <b>Zoning:</b>
+  <%= @owner.zoning %>
+</p>
+
+
+<%= link_to 'Edit', edit_owner_path(@owner) %> |
+<%= link_to 'Back', owners_path %>

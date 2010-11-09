@@ -1,4 +1,4 @@
-
+require 'mechanize'
 class ReweItem
   
       def self.parse_bryson_format(link_data,doc_no)
@@ -56,7 +56,7 @@ class ReweItem
       
       insert_hash.merge!({:adtext => link_data,:lfname => 'Bryson', :docnumber => doc_no })
       Auction.create(insert_hash)
-        
+        ReweItem.get_address_from_tmk(tmk_number) unless tmk_number.nil?
     end
 
     def self.parse_derek_format(link_data,doc_no)
@@ -120,6 +120,7 @@ class ReweItem
         
         insert_hash.merge!({:adtext => link_data,:lfname => 'Derek Wong', :docnumber => doc_no })
       Auction.create(insert_hash)
+      ReweItem.get_address_from_tmk(tmk_no) unless tmk_no.nil?
     end
 
 
@@ -196,7 +197,7 @@ class ReweItem
         
          insert_hash.merge!({:adtext => link_data,:lfname => 'David B. Rosen', :docnumber => doc_no })
       Auction.create(insert_hash)
-       
+      ReweItem.get_address_from_tmk(tmk_no) unless tmk_no.nil?
     end
 
     def self.parse_michael_format(link_data,doc_no)
@@ -285,7 +286,7 @@ class ReweItem
       
         insert_hash.merge!({:adtext => link_data,:lfname => 'Michael R. Daniels', :docnumber => doc_no })
         Auction.create(insert_hash)
-      
+        ReweItem.get_address_from_tmk(tmk) unless tmk.nil?
     end
 
     def self.parse_johnson_format(link_data,doc_no)
@@ -350,7 +351,7 @@ class ReweItem
       end
        insert_hash.merge!({:adtext => link_data,:lfname => 'Johnson S. Chen', :docnumber => doc_no })
       Auction.create(insert_hash)
-      
+      ReweItem.get_address_from_tmk(tmk_number) unless tmk_number.nil?
       
     end
     
@@ -364,7 +365,64 @@ class ReweItem
             ActiveRecord::Base.connection.execute("Truncate #{name}")
           end
           
-      end
+        end
+        
+    def self.get_address_from_tmk(tmk)
+          # Start mechanize
+      agent = Mechanize.new
+      agent.keep_alive = true
+      
+       if tmk.length > 4
+            tmk = tmk.gsub!(/[\(\)\-' ']/,'')
+            tmk = tmk.slice(1,12)
+      
+      agent.get('http://honolulupropertytax.com/Search/GenericSearch.aspx?mode=PARID') do |page|
+      res = page.form_with(:name => 'frmMain') do |f|
+         f.field_with(:name => 'inpParid').value = tmk
+       end.submit
+      
+     if res.form_with(:name => 'frmMain').field_with(:name => 'hdLink')  != nil     
+         res1 = res.form_with(:name => 'frmMain') do |f|
+          f.field_with(:name =>'hdLink').value = '../Forms/Datalets.aspx?idx=1&sIndex=1'
+          f.field_with(:name =>'hdAction').value = 'Link'
+          f.action = "GenericSearch.aspx?mode="+"PARID"
+        end.submit
+        url = "http://honolulupropertytax.com/Forms/PrintDatalet.aspx?pin="
+        res1.form_with(:name => 'frmMain') do |f|
+            url += tmk
+            url += "&gsp=" + f.field_with(:name => 'hdGsp').value
+            url += "&taxyear=" + f.field_with(:name => 'hdTaxYear').value
+            url += "&jur=000" 
+            url += "&ownseq=1"
+            url += "&card=1" 
+            url += "&State=1" 
+            url += "&item=1" 
+            url += "&items=-1"
+            url += "&all=all"
+            url += "&ranks=Datalet"
+        end
+        
+        puts url
+        owner_hash = {}
+       res2 =  agent.get(url)
+        name =    res2.parser.xpath("//table[@class='WidgetBar']//tr/td[@class='DataletHeaderBottom']")[1].inner_html
+         owner_hash.merge!({:owner_name => name})
+        parcel_data =  res.parser.xpath("//table[@class='WidgetBar']//tr[2]/td/table[2]//td[@class='DataletData']/font")
+         parcel_data.each_with_index do |n,i|
+            owner_hash.merge!({:tmk => n.inner_html}) if i == 0
+            owner_hash.merge!({:site_address => n.inner_html}) if i == 1
+            owner_hash.merge!({:apartment_no => n.inner_html}) if i == 2
+            owner_hash.merge!({:property_class => n.inner_html}) if i == 3
+            owner_hash.merge!({:total_parcel_area => n.inner_html}) if i == 4
+            owner_hash.merge!({:zoning => n.inner_html}) if i == 5
+          end
+          Owner.create(owner_hash)
+    end
+  end
+  end
+        end
+        
+        
       
 end
 

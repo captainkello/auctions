@@ -1,0 +1,19 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  tmk: MyString
+  owner_name: MyString
+  site_address: MyText
+  apartment_no: MyString
+  property_class: MyString
+  total_parcel_area: MyString
+  zoning: MyString
+
+two:
+  tmk: MyString
+  owner_name: MyString
+  site_address: MyText
+  apartment_no: MyString
+  property_class: MyString
+  total_parcel_area: MyString
+  zoning: MyString
