@@ -107,7 +107,7 @@ class AuctionsController < ApplicationController
         end
       puts links.length
       @no_of_records = links.length
-      ReweItem.truncate_tables(["Auctions","Rejects"])
+      ReweItem.truncate_tables(["auctions","rejects"])
       links.each_with_index do |link,index|
             if link.include?('Bryson')
               puts "---------parsing record no #{index+1}, lawyer name - Bryson--------------"
