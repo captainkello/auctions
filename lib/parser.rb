@@ -429,7 +429,7 @@ class ReweItem
           res2 =  agent.get(url)
           name =    res2.parser.xpath("//table[@class='WidgetBar']//tr/td[@class='DataletHeaderBottom']")[1].inner_html
           owner_hash.merge!({:owner_name => name})
-          parcel_data =  res.parser.xpath("//table[@class='WidgetBar']//tr[2]/td/table[2]//td[@class='DataletData']/font")
+          parcel_data =  res2.parser.xpath("//table[@class='WidgetBar']//tr[2]/td/table[2]//td[@class='DataletData']/font")
           parcel_data.each_with_index do |n,i|
             owner_hash.merge!({:tmk => n.inner_html}) if i == 0
             owner_hash.merge!({:site_address => n.inner_html}) if i == 1

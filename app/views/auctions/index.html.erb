@@ -62,3 +62,29 @@
 </tr>
 <% end %>
 </table>
+
+<p><h2>Owners</h2>
+<table class="ads_table">
+<tr>
+  <th>TMK</th>
+  <th>Name</th>
+  <th>Site Address</th>
+  <th>Apartment No.</th>
+  <th>Property Class</th>
+  <th>Total Parcel Area</th>
+  <th>Zoning</th>		
+</tr>
+<% @owners.each do |owner| %>
+<tr>
+<td><%= owner.tmk %></td>
+<td><%= owner.owner_name %></td>
+<td><%= owner.site_address %></td>
+<td><%= owner.apartment_no %></td>
+<td><%= owner.property_class %></td>
+<td><%= owner.total_parcel_area %></td>
+<td><%= owner.zoning %></td>
+
+</tr>
+<% end %>
+</table>
+

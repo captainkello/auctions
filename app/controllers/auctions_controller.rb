@@ -7,6 +7,7 @@ class AuctionsController < ApplicationController
   def index
     @auctions = Auction.all
     @rejects = Reject.all
+    @owners = Owner.all
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @auctions }
@@ -94,7 +95,7 @@ class AuctionsController < ApplicationController
 
       agent.get('http://secure.adpay.com/searchresults.aspx?catid=1004&pid=30317542665635565749382B643066356B6951776E673D3D') do |page|
         res = page.form_with(:name => 'Form1') do |f|
-          f.field_with(:name => 'RadGridItems:_ctl1:_ctl2:_ctl1:ddlResults').value = 100
+          f.field_with(:name => 'RadGridItems:_ctl1:_ctl2:_ctl1:ddlResults').value = 500
         end.submit
         
 
@@ -107,7 +108,7 @@ class AuctionsController < ApplicationController
         end
       puts links.length
       @no_of_records = links.length
-      ReweItem.truncate_tables(["auctions","rejects"])
+      ReweItem.truncate_tables(["auctions","rejects","owners"])
       links.each_with_index do |link,index|
             if link.include?('Bryson')
               puts "---------parsing record no #{index+1}, lawyer name - Bryson--------------"
