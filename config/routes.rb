@@ -1,4 +1,6 @@
 Auctions::Application.routes.draw do
+  resources :owners
+
  resources :rejects
 
   resources :auctions do
