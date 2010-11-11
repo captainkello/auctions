@@ -68,21 +68,18 @@
 <tr>
   <th>TMK</th>
   <th>Name</th>
-  <th>Site Address</th>
-  <th>Apartment No.</th>
+  
   <th>Property Class</th>
-  <th>Total Parcel Area</th>
-  <th>Zoning</th>		
+  <th>Total Property Assessed value</th>
+  <th>land Assesed Value</th>		
 </tr>
 <% @owners.each do |owner| %>
 <tr>
 <td><%= owner.tmk %></td>
 <td><%= owner.owner_name %></td>
-<td><%= owner.site_address %></td>
-<td><%= owner.apartment_no %></td>
 <td><%= owner.property_class %></td>
-<td><%= owner.total_parcel_area %></td>
-<td><%= owner.zoning %></td>
+<td><%= owner.total_property_assessed_value %></td>
+<td><%= owner.land_assessed_value %></td>
 
 </tr>
 <% end %>

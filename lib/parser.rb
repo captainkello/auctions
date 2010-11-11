@@ -409,35 +409,35 @@ class ReweItem
             f.field_with(:name =>'hdAction').value = 'Link'
             f.action = "GenericSearch.aspx?mode="+"PARID"
           end.submit
-          url = "http://honolulupropertytax.com/Forms/PrintDatalet.aspx?pin="
-          res1.form_with(:name => 'frmMain') do |f|
-            url += tmk
-            url += "&gsp=" + f.field_with(:name => 'hdGsp').value
-            url += "&taxyear=" + f.field_with(:name => 'hdTaxYear').value
-            url += "&jur=000" 
-            url += "&ownseq=1"
-            url += "&card=1" 
-            url += "&State=1" 
-            url += "&item=1" 
-            url += "&items=-1"
-            url += "&all=all"
-            url += "&ranks=Datalet"
-          end
+          #~ url = "http://honolulupropertytax.com/Forms/PrintDatalet.aspx?pin="
+          #~ res1.form_with(:name => 'frmMain') do |f|
+            #~ url += tmk
+            #~ url += "&gsp=" + f.field_with(:name => 'hdGsp').value
+            #~ url += "&taxyear=" + f.field_with(:name => 'hdTaxYear').value
+            #~ url += "&jur=000" 
+            #~ url += "&ownseq=1"
+            #~ url += "&card=1" 
+            #~ url += "&State=1" 
+            #~ url += "&item=1" 
+            #~ url += "&items=-1"
+            #~ url += "&all=all"
+            #~ url += "&ranks=Datalet"
+          #~ end
         
-          puts url
+          #~ puts url
           owner_hash = {}
-          res2 =  agent.get(url)
-          name =    res2.parser.xpath("//table[@class='WidgetBar']//tr/td[@class='DataletHeaderBottom']")[1].inner_html
+         name = res1.parser.xpath("//table[@class='WidgetBar']//tr[2]/td/table[4]//td[@class='DataletData']/font")[0].inner_html
+           res2 = res1.link_with(:text => 'Assessed Values').click
+           owner_data =  res2.parser.xpath("//table[@class='WidgetBar']//tr[2]/td/table[2]//td[@class='DataletData']/font")
+          #~ res2 =  agent.get(url)
+          #~ name =    res2.parser.xpath("//table[@class='WidgetBar']//tr/td[@class='DataletHeaderBottom']")[1].inner_html
           owner_hash.merge!({:owner_name => name})
-          parcel_data =  res2.parser.xpath("//table[@class='WidgetBar']//tr[2]/td/table[2]//td[@class='DataletData']/font")
-          parcel_data.each_with_index do |n,i|
-            owner_hash.merge!({:tmk => n.inner_html}) if i == 0
-            owner_hash.merge!({:site_address => n.inner_html}) if i == 1
-            owner_hash.merge!({:apartment_no => n.inner_html}) if i == 2
-            owner_hash.merge!({:property_class => n.inner_html}) if i == 3
-            owner_hash.merge!({:total_parcel_area => n.inner_html}) if i == 4
-            owner_hash.merge!({:zoning => n.inner_html}) if i == 5
-          end
+          #~ parcel_data =  res2.parser.xpath("//table[@class='WidgetBar']//tr[2]/td/table[8]//td[@class='DataletData']/font")
+          owner_hash.merge!({:tmk => owner_data[0].inner_html}) 
+          owner_hash.merge!({:property_class => owner_data[1].inner_html})
+          owner_hash.merge!({:total_property_assessed_value => owner_data[2].inner_html})
+          owner_hash.merge!({:land_assessed_value => owner_data[5].inner_html})
+          
           Owner.create(owner_hash)
         end
       end
