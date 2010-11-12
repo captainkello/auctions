@@ -52,6 +52,7 @@ class ReweItem
       tmk_number = data[(tmk_index + 2)..(tmk_index + 6)].join(' ')
       puts "TMK No -- #{tmk_number}"
       insert_hash.merge!({:tmk => tmk_number})
+      return if tmk_number.length < 10
     end
       
     insert_hash.merge!({:adtext => link_data,:lfname => 'Bryson', :docnumber => doc_no })
@@ -76,6 +77,7 @@ class ReweItem
       tmk_no = data[ data.index('TMK') + 2 ] + ' ' + data[ data.index('TMK') + 3 ]
       puts "TMK NO -- #{tmk_no}"
       insert_hash.merge!({:tmk => tmk_no})
+      return if tmk_no.length < 10
     end
          
     #get Property address
@@ -192,6 +194,7 @@ class ReweItem
       tmk_no = data[(tmk_index+ 4)..(tmk_index+ 4)].join(' ')
       puts "tmk no -- #{tmk_no}"
       insert_hash.merge!({:tmk => tmk_no})
+      return if tmk_no.length < 10
     end
         
         
@@ -254,6 +257,7 @@ class ReweItem
       tmk = data[ data.index('TMK') + 1]
       puts tmk
       insert_hash.merge!({:tmk => tmk})
+      return if tmk.length < 10
     end
        
     #get  auction date
@@ -312,6 +316,7 @@ class ReweItem
       tmk_no = data[data.index('TMK:')+1]
       puts "tmk no -- #{tmk_no}"
       insert_hash.merge!({:tmk => tmk_no})
+      return if tmk_no.length < 10
     end
       
     #get association of apartment owners
@@ -348,6 +353,7 @@ class ReweItem
       tmk_number = data[(tmk_index + 2)..(tmk_index + 6)].join(' ')
       puts "TMK No -- #{tmk_number}"
       insert_hash.merge!({:tmk => tmk_number})
+      return if tmk_number.length < 10
     end
     insert_hash.merge!({:adtext => link_data,:lfname => 'Johnson S. Chen', :docnumber => doc_no })
     Auction.create(insert_hash)
@@ -362,12 +368,13 @@ class ReweItem
       
   def self.truncate_tables(table_names)
     require 'active_record'
+    require 'rails'
     #ActiveRecord::Base.configurations = Rails::Configuration.new.database_configuration
 
     begin
-      config = ActiveRecord::Base.configurations[RAILS_ENV]
+      config = ActiveRecord::Base.configurations[Rails.env]
       ActiveRecord::Base.establish_connection
-      logger.info(config["adapter"].inspect)
+      #logger.info(config["adapter"].inspect)
       case config["adapter"]
       when "mysql"
         table_names.each do |table|
@@ -380,7 +387,8 @@ class ReweItem
         end                                                                                                                               
         ActiveRecord::Base.connection.execute("VACUUM")
       end
-    rescue
+    rescue Exception => e
+    puts e.inspect
       $stderr.puts "Error while truncating. Make sure you have a valid database.yml file and have created the database tables before running this command. You should be able to run rake db:migrate without an error"
     end
     #  table_names.each do |name|
@@ -426,7 +434,7 @@ class ReweItem
         
           #~ puts url
           owner_hash = {}
-         name = res1.parser.xpath("//table[@class='WidgetBar']//tr[2]/td/table[4]//td[@class='DataletData']/font")[0].inner_html
+         name = res.parser.xpath("//tr[@class='SearchResults'][1]/td[2]/font").inner_html
            res2 = res1.link_with(:text => 'Assessed Values').click
            owner_data =  res2.parser.xpath("//table[@class='WidgetBar']//tr[2]/td/table[2]//td[@class='DataletData']/font")
           #~ res2 =  agent.get(url)
@@ -448,7 +456,7 @@ class ReweItem
       
 end
 
-
+ReweItem.truncate_tables(["auctions","rejects","owners"])
 
 
 

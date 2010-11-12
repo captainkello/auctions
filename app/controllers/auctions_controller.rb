@@ -137,7 +137,9 @@ class AuctionsController < ApplicationController
 
 
       end
-      @no_of_records -= @rejected_records
+      #@no_of_records -= @rejected_records
+      @no_of_records = Auctions.count
+      @rejected_records = Rejects.count
   end
   
 end
